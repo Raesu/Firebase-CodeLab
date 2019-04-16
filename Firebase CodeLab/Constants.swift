@@ -7,5 +7,5 @@
 //
 
 enum RCParams: String {
-  case rewardedButtonTitle, allowMultipleRewards, shouldShowInterstitial, mainButtonTitle, rewardedAdUnitID, interstitialAdUnitID
+  case rewardedButtonTitle, rewardedAdUnitID, interstitialAdUnitID
 }

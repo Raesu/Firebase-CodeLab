@@ -8,11 +8,5 @@
 	<string>ca-app-pub-6562905997824789/5875510304</string>
 	<key>rewardedButtonTitle</key>
 	<string>Watch an ad for currency.</string>
-	<key>mainButtonTitle</key>
-	<string>white</string>
-	<key>shouldShowInterstitial</key>
-	<true/>
-	<key>allowMultipleRewards</key>
-	<true/>
 </dict>
 </plist>
