@@ -10,7 +10,7 @@ import GoogleMobileAds
 
 class InterstitialAdManager: BaseAdManager {
   
-  private let adUnitID = "ca-app-pub-6562905997824789/5875510304"
+  private var adUnitID = "ca-app-pub-6562905997824789/5875510304"
   private var completionHandler: (() -> Void)?
   
   private lazy var ad: GADInterstitial = {
@@ -20,6 +20,10 @@ class InterstitialAdManager: BaseAdManager {
   
   override var isReady: Bool {
     return ad.isReady
+  }
+  
+  func setAdUnitID(_ id: String) {
+    adUnitID = id
   }
   
   override func loadAd() {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class ViewController: BaseViewController {
 
@@ -19,13 +20,9 @@ class ViewController: BaseViewController {
     addButton(withTitle: "Check Details Page")
     
   }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
 
   @objc override func buttonPressed() {
-  
+    
     adManager.interstitialAdManager.attemptToShowAd(fromViewController: self) {
       let vc = DetailViewController(adManager: self.adManager)
       self.navigationController?.pushViewController(vc, animated: true)

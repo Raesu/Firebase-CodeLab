@@ -7,14 +7,37 @@
 //
 
 import UIKit
+import FirebaseAnalytics
+import FirebaseRemoteConfig
 
 class DetailViewController: BaseViewController {
+  
+  var adWatched = false
   
   override func loadView() {
     super.loadView()
     view.backgroundColor = .white
     
-    addButton(withTitle: "Watch an ad for a reward!")
+    let title = RemoteConfig.remoteConfig()[RCParams.rewardedButtonTitle.rawValue].stringValue!
+    addButton(withTitle: title)
+    
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    Analytics.logEvent("details_viewed", parameters: ["param1": true])
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    if isMovingFromParent {
+      if adWatched == false { Analytics.logEvent("ad_declined", parameters: ["rewardAmount": 1]) }
+    }
     
   }
   
@@ -29,6 +52,7 @@ class DetailViewController: BaseViewController {
         if rewardAmount > 0 {
           title = "Congratulations!"
           message = "You have gained \(rewardAmount) game currency for watching this ad."
+          self.adWatched = true
         } else {
           title = "Sorry..."
           message = "You seem to have cancelled the ad before a reward was granted."
@@ -37,20 +61,19 @@ class DetailViewController: BaseViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+        
       }
     } else {
+      
       let alert = UIAlertController(title: "Hmm...", message: "No ad is ready to watch. Attempt to reload?", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
         self.adManager.rewardedAdManager.loadAd()
       }))
       alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
       self.navigationController?.present(alert, animated: true, completion: nil)
+    
     }
     
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
   }
 
 }

@@ -11,4 +11,8 @@ class AdManager {
   let interstitialAdManager = InterstitialAdManager()
   let rewardedAdManager = RewardedAdManager()
   
+  func loadAds() {
+    interstitialAdManager.loadAd()
+    rewardedAdManager.loadAd()
+  }
 }

@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BackgroundColor</key>
+	<key>rewardedButtonTitle</key>
+	<string>Watch an ad for currency.</string>
+	<key>mainButtonTitle</key>
 	<string>white</string>
 	<key>shouldShowInterstitial</key>
-	<false/>
+	<true/>
 	<key>allowMultipleRewards</key>
 	<true/>
 </dict>

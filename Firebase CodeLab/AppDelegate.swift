@@ -24,21 +24,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-    FirebaseConfiguration.shared.setLoggerLevel(.min)
     FirebaseApp.configure()
   
     GADMobileAds.sharedInstance().start(completionHandler: nil)
-    adManager.interstitialAdManager.loadAd()
-    adManager.rewardedAdManager.loadAd()
+    adManager.loadAds()
     
-    let config = RemoteConfig.remoteConfig()
-    config.configSettings = RemoteConfigSettings(developerModeEnabled: true)
-    config.setDefaults(fromPlist: "RCDefaults")
+    setupRemoteConfig()
     
     let navCon = UINavigationController(rootViewController: ViewController(adManager: adManager))
     window.rootViewController = navCon
     
     return true
+  }
+  
+  func setupRemoteConfig() {
+    
+    let config = RemoteConfig.remoteConfig()
+    config.configSettings = RemoteConfigSettings(developerModeEnabled: true)
+    config.setDefaults(fromPlist: "RCDefaults")
+    
+    config.fetch(withExpirationDuration: 0) { (fetchStatus, error) in
+      if let error = error {
+        print("error fetching: " + error.localizedDescription)
+        return
+      }
+      
+      config.activateFetched()
+    }
+    
+    InstanceID.instanceID().instanceID { (result, error) in
+      if let error = error {
+        print("Error fetching remote instance ID: \(error)")
+      } else if let result = result {
+        print("RYSU Remote instance ID token: \(result.token)")
+      }
+    }
+    
+  }
+  
+  func logConfigValues() {
+    let config = RemoteConfig.remoteConfig()
+    print("RYSU allowMultipleRewards: " + (config[RCParams.allowMultipleRewards.rawValue].boolValue ? "true" : "false"))
+    print("RYSU shouldShowInterstitial: " + (config[RCParams.shouldShowInterstitial.rawValue].boolValue ? "true" : "false"))
+    print("RYSU mainButtonTitle: " + (config[RCParams.mainButtonTitle.rawValue].stringValue ?? "no value"))
+    print("RYSU rewardedButtonTitle: " + (config[RCParams.rewardedButtonTitle.rawValue].stringValue ?? "no value"))
   }
 
 }
