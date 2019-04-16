@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>631917571573-u46ihj6m7r880d1kqukpqra39kk0e9du.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.631917571573-u46ihj6m7r880d1kqukpqra39kk0e9du</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCT2h3i_Wi45MZ5BZuW2rcZnTcOTsD8si4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>631917571573</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>hhh.Firebase-CodeLab</string>
+	<key>PROJECT_ID</key>
+	<string>fir-codelab-da0ee</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fir-codelab-da0ee.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:631917571573:ios:a90157bf84adc864</string>
+	<key>DATABASE_URL</key>
+	<string>https://fir-codelab-da0ee.firebaseio.com</string>
+</dict>
+</plist>
