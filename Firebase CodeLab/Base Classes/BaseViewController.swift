@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import FirebaseRemoteConfig
 
 class BaseViewController: UIViewController {
   
   let adManager: AdManager
+  let config = RemoteConfig.remoteConfig()
   
   init(adManager: AdManager) {
     self.adManager = adManager

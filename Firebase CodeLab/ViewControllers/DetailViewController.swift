@@ -18,7 +18,7 @@ class DetailViewController: BaseViewController {
     super.loadView()
     view.backgroundColor = .white
     
-    let title = RemoteConfig.remoteConfig()[RCParams.rewardedButtonTitle.rawValue].stringValue!
+    let title = config[RCParams.rewardedButtonTitle.rawValue].stringValue!
     addButton(withTitle: title)
     
   }
@@ -58,9 +58,7 @@ class DetailViewController: BaseViewController {
           message = "You seem to have cancelled the ad before a reward was granted."
         }
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        self.presentAlert(withTitle: title, message: message)
         
       }
     } else {
@@ -73,7 +71,12 @@ class DetailViewController: BaseViewController {
       self.navigationController?.present(alert, animated: true, completion: nil)
     
     }
-    
+  }
+  
+  func presentAlert(withTitle title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
   }
 
 }

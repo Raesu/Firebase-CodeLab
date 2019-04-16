@@ -11,7 +11,7 @@ import GoogleMobileAds
 class RewardedAdManager: BaseAdManager {
   
   typealias RewardedCompletion = (Int, String) -> Void
-  private let adUnitID = "ca-app-pub-6562905997824789/6785143588"
+  var adUnitID = "ca-app-pub-6562905997824789/6785143588"
   private var completionHandler: RewardedCompletion?
   
   var reward: (Int, String) = (0, "No reward")

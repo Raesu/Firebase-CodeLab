@@ -9,6 +9,11 @@
 import UIKit
 import Firebase
 
+// TODO: interstitial ad unit swap
+// TODO: A/B test with different reward amounts
+// TODO: remove allowMultipleRewards and mainButtonTitle
+// TODO: Front end walkthrough and Kahoot quiz
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
