@@ -18,7 +18,7 @@ class DetailViewController: BaseViewController {
     super.loadView()
     view.backgroundColor = .white
     
-    let title = config[RCParams.rewardedButtonTitle.rawValue].stringValue!
+    let title = RemoteConfigManager.rewardedButtonTitle
     addButton(withTitle: title)
     
   }

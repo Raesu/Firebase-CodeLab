@@ -11,7 +11,6 @@ import Firebase
 
 // TODO: interstitial ad unit swap
 // TODO: A/B test with different reward amounts
-// TODO: remove allowMultipleRewards and mainButtonTitle
 // TODO: Front end walkthrough and Kahoot quiz
 
 @UIApplicationMain
@@ -29,11 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+    FirebaseConfiguration.shared.setLoggerLevel(.min)
     FirebaseApp.configure()
-  
     GADMobileAds.sharedInstance().start(completionHandler: nil)
-    adManager.loadAds()
-    
     setupRemoteConfig()
     
     let navCon = UINavigationController(rootViewController: ViewController(adManager: adManager))
@@ -49,12 +46,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     config.setDefaults(fromPlist: "RCDefaults")
     
     config.fetch(withExpirationDuration: 0) { (fetchStatus, error) in
+      
       if let error = error {
         print("error fetching: " + error.localizedDescription)
         return
       }
       
       config.activateFetched()
+      self.adManager.interstitialAdManager.adUnitID = RemoteConfigManager.interstitialAdUnitID
+      self.adManager.rewardedAdManager.adUnitID = RemoteConfigManager.rewardedAdUnitID
+      self.adManager.loadAds()
+      
+      RemoteConfigManager.logParams()
     }
     
     InstanceID.instanceID().instanceID { (result, error) in
@@ -65,14 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
     }
     
-  }
-  
-  func logConfigValues() {
-    let config = RemoteConfig.remoteConfig()
-    print("RYSU allowMultipleRewards: " + (config[RCParams.allowMultipleRewards.rawValue].boolValue ? "true" : "false"))
-    print("RYSU shouldShowInterstitial: " + (config[RCParams.shouldShowInterstitial.rawValue].boolValue ? "true" : "false"))
-    print("RYSU mainButtonTitle: " + (config[RCParams.mainButtonTitle.rawValue].stringValue ?? "no value"))
-    print("RYSU rewardedButtonTitle: " + (config[RCParams.rewardedButtonTitle.rawValue].stringValue ?? "no value"))
   }
 
 }
