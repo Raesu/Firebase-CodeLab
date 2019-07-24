@@ -11,11 +11,11 @@ import GoogleMobileAds
 class RewardedAdManager: BaseAdManager {
   
   typealias RewardedCompletion = (Int, String) -> Void
-//  var adUnitID = "ca-app-pub-6562905997824789/6785143588"
+
   private var completionHandler: RewardedCompletion?
   private var ad: GADRewardedAd?
   
-  var reward: (Int, String) = (0, "No reward")
+  private var reward: (Int, String) = (0, "No reward")
   
   var isReady: Bool { return ad == nil ? false : ad!.isReady }
   
@@ -28,13 +28,9 @@ class RewardedAdManager: BaseAdManager {
   }
   
   func showAd(fromRoot root: UIViewController, withCompletion completionHandler: @escaping RewardedCompletion) {
-    if let ad = ad {
-      ad.present(fromRootViewController: root, delegate: self)
-    }
-    GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: root)
+    ad?.present(fromRootViewController: root, delegate: self)
     self.completionHandler = completionHandler
   }
-  
 }
 
 
@@ -46,7 +42,9 @@ extension RewardedAdManager: GADRewardedAdDelegate {
   }
   
   func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
-    guard let handler = completionHandler else { loadAd(); return }
+    
+    loadAd()
+    guard let handler = completionHandler else { return }
     
     handler(reward.0, reward.1)
     self.completionHandler = nil

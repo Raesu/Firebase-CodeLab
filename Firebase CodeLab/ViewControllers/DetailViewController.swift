@@ -38,7 +38,6 @@ class DetailViewController: BaseViewController {
     if isMovingFromParent {
       if adWatched == false { Analytics.logEvent("ad_declined", parameters: ["rewardAmount": 1]) }
     }
-    
   }
   
   override func buttonPressed() {
@@ -59,7 +58,6 @@ class DetailViewController: BaseViewController {
         }
         
         self.presentAlert(withTitle: title, message: message)
-        
       }
     } else {
       
