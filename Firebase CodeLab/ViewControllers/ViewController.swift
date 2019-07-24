@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAnalytics
+//import FirebaseAnalytics
 
 class ViewController: BaseViewController {
 
@@ -23,10 +23,10 @@ class ViewController: BaseViewController {
 
   @objc override func buttonPressed() {
     
-    adManager.interstitialAdManager.attemptToShowAd(fromViewController: self) {
-      let vc = DetailViewController(adManager: self.adManager)
-      self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    adManager.interstitialAdManager.attemptToShowAd(fromViewController: self) {
+//      let vc = DetailViewController(adManager: self.adManager)
+//      self.navigationController?.pushViewController(vc, animated: true)
+//    }
     
   }
 

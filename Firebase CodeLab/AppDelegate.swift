@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+//import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow()
     window?.makeKeyAndVisible()
     
-    FirebaseConfiguration.shared.setLoggerLevel(.min)
-    FirebaseApp.configure()
-    GADMobileAds.sharedInstance().start(completionHandler: nil)
+//    FirebaseConfiguration.shared.setLoggerLevel(.min)
+//    FirebaseApp.configure()
+//    GADMobileAds.sharedInstance().start(completionHandler: nil)
     setupRemoteConfig()
     
     let navCon = UINavigationController(rootViewController: ViewController(adManager: adManager))
@@ -33,29 +33,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func setupRemoteConfig() {
     
-    let config = RemoteConfig.remoteConfig()
-    config.setDefaults(fromPlist: "RCDefaults")
-    
-    config.fetch(withExpirationDuration: 0) { (fetchStatus, error) in
-      
-      if let error = error {
-        print("error fetching: " + error.localizedDescription)
-        return
-      }
-      
-      config.activate(completionHandler: { (error) in
-        self.adManager.loadAds()
-        RemoteConfigManager.logParams()
-      })
-    }
-    
-    InstanceID.instanceID().instanceID { (result, error) in
-      if let error = error {
-        print("Error fetching remote instance ID: \(error)")
-      } else if let result = result {
-        print("RYSU Remote instance ID token: \(result.token)")
-      }
-    }
+//    let config = RemoteConfig.remoteConfig()
+//    config.setDefaults(fromPlist: "RCDefaults")
+//
+//    config.fetch(withExpirationDuration: 0) { (fetchStatus, error) in
+//
+//      if let error = error {
+//        print("error fetching: " + error.localizedDescription)
+//        return
+//      }
+//
+//      config.activate(completionHandler: { (error) in
+//        self.adManager.loadAds()
+//        RemoteConfigManager.logParams()
+//      })
+//    }
+//
+//    InstanceID.instanceID().instanceID { (result, error) in
+//      if let error = error {
+//        print("Error fetching remote instance ID: \(error)")
+//      } else if let result = result {
+//        print("RYSU Remote instance ID token: \(result.token)")
+//      }
+//    }
     
   }
 

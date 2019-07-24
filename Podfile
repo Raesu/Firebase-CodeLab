@@ -8,9 +8,9 @@ target 'Firebase CodeLab' do
 
   # Pods for Firebase CodeLab
 
-pod 'Firebase/Core'
-pod 'Firebase/Analytics'
-pod 'Firebase/RemoteConfig'
-pod 'Firebase/AdMob'
+#pod 'Firebase/Core'
+#pod 'Firebase/Analytics'
+#pod 'Firebase/RemoteConfig'
+#pod 'Firebase/AdMob'
 
 end
