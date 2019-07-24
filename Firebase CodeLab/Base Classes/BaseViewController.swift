@@ -36,7 +36,5 @@ class BaseViewController: UIViewController {
 
   @objc func buttonPressed() {}
   
-  required init?(coder aDecoder: NSCoder) {
-    return nil
-  }
+  required init?(coder aDecoder: NSCoder) { return nil }
 }

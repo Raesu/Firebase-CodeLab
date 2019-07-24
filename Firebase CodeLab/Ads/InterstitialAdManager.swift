@@ -10,31 +10,24 @@ import GoogleMobileAds
 
 class InterstitialAdManager: BaseAdManager {
   
-  var adUnitID = "ca-app-pub-6562905997824789/5875510304"
   private var completionHandler: (() -> Void)?
+  private var ad: GADInterstitial?
   
-  private lazy var ad: GADInterstitial = {
-    let ad = GADInterstitial(adUnitID: adUnitID)
-    return ad
-  }()
-  
-  override var isReady: Bool {
-    return ad.isReady
-  }
+  var isReady: Bool { return ad == nil ? false : ad!.isReady }
   
   override func loadAd() {
-    ad = GADInterstitial(adUnitID: "ca-app-pub-6562905997824789/5875510304")
-    ad.delegate = self
-    ad.load(request())
+    ad = GADInterstitial(adUnitID: RemoteConfigManager.interstitialAdUnitID)
+    ad?.delegate = self
+    ad?.load(request())
   }
   
   func attemptToShowAd(fromViewController vc: UIViewController, withCompletion completionHandler: @escaping () -> Void) {
     self.completionHandler = completionHandler
     
-    if ad.isReady {
+    if let ad = ad, ad.isReady {
       ad.present(fromRootViewController: vc)
     } else {
-      ad.load(request())
+      loadAd()
       completionHandler()
       self.completionHandler = nil
     }

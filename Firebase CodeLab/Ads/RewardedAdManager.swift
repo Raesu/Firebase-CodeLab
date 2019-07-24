@@ -11,21 +11,26 @@ import GoogleMobileAds
 class RewardedAdManager: BaseAdManager {
   
   typealias RewardedCompletion = (Int, String) -> Void
-  var adUnitID = "ca-app-pub-6562905997824789/6785143588"
+//  var adUnitID = "ca-app-pub-6562905997824789/6785143588"
   private var completionHandler: RewardedCompletion?
+  private var ad: GADRewardedAd?
   
   var reward: (Int, String) = (0, "No reward")
   
-  override var isReady: Bool {
-    return GADRewardBasedVideoAd.sharedInstance().isReady
-  }
+  var isReady: Bool { return ad == nil ? false : ad!.isReady }
   
   override func loadAd() {
-    GADRewardBasedVideoAd.sharedInstance().delegate = self
-    GADRewardBasedVideoAd.sharedInstance().load(request(), withAdUnitID: adUnitID)
+    ad = GADRewardedAd(adUnitID: RemoteConfigManager.rewardedAdUnitID)
+    ad?.load(request()) { (error) in
+      guard error == nil else { return }
+      print("RYSU rewarded ad loaded with amount:\(self.ad!.reward!.amount) of type:\(self.ad!.reward!.type)")
+    }
   }
   
   func showAd(fromRoot root: UIViewController, withCompletion completionHandler: @escaping RewardedCompletion) {
+    if let ad = ad {
+      ad.present(fromRootViewController: root, delegate: self)
+    }
     GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: root)
     self.completionHandler = completionHandler
   }
@@ -33,28 +38,19 @@ class RewardedAdManager: BaseAdManager {
 }
 
 
-extension RewardedAdManager: GADRewardBasedVideoAdDelegate {
+extension RewardedAdManager: GADRewardedAdDelegate {
   
-  func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
+  func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
     print("rewarded \(reward.amount) of \(reward.type)")
     self.reward = (reward.amount.intValue, reward.type)
   }
   
-  func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    GADRewardBasedVideoAd.sharedInstance().load(request(), withAdUnitID: adUnitID)
-    if let handler = completionHandler {
-      handler(reward.0, reward.1)
-      self.completionHandler = nil
-      self.reward = (0, "No reward")
-    }
-  }
-  
-  func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    print("rewarded ad loaded")
-  }
-  
-  func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error) {
-    print("failed to load with error: " + error.localizedDescription)
+  func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
+    guard let handler = completionHandler else { loadAd(); return }
+    
+    handler(reward.0, reward.1)
+    self.completionHandler = nil
+    self.reward = (0, "No reward")
   }
   
 }

@@ -12,25 +12,21 @@ import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  let window: UIWindow
-  let adManager: AdManager
-  
-  override init() {
-    window = UIWindow()
-    window.makeKeyAndVisible()
-    adManager = AdManager()
-    super.init()
-  }
+  var window: UIWindow?
+  let adManager = AdManager()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+    window = UIWindow()
+    window?.makeKeyAndVisible()
+    
     FirebaseConfiguration.shared.setLoggerLevel(.min)
     FirebaseApp.configure()
     GADMobileAds.sharedInstance().start(completionHandler: nil)
     setupRemoteConfig()
     
     let navCon = UINavigationController(rootViewController: ViewController(adManager: adManager))
-    window.rootViewController = navCon
+    window?.rootViewController = navCon
     
     return true
   }
@@ -38,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func setupRemoteConfig() {
     
     let config = RemoteConfig.remoteConfig()
-    config.configSettings = RemoteConfigSettings(developerModeEnabled: true)
     config.setDefaults(fromPlist: "RCDefaults")
     
     config.fetch(withExpirationDuration: 0) { (fetchStatus, error) in
@@ -48,12 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return
       }
       
-      config.activateFetched()
-      self.adManager.interstitialAdManager.adUnitID = RemoteConfigManager.interstitialAdUnitID
-      self.adManager.rewardedAdManager.adUnitID = RemoteConfigManager.rewardedAdUnitID
-      self.adManager.loadAds()
-      
-      RemoteConfigManager.logParams()
+      config.activate(completionHandler: { (error) in
+        self.adManager.loadAds()
+        RemoteConfigManager.logParams()
+      })
     }
     
     InstanceID.instanceID().instanceID { (result, error) in

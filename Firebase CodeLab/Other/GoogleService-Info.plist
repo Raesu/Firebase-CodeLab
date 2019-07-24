@@ -32,5 +32,7 @@
 	<string>1:631917571573:ios:a90157bf84adc864</string>
 	<key>DATABASE_URL</key>
 	<string>https://fir-codelab-da0ee.firebaseio.com</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-6562905997824789~4539265952</string>
 </dict>
 </plist>
