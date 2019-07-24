@@ -38,15 +38,15 @@ class InterstitialAdManager: BaseAdManager {
 //extension InterstitialAdManager: GADInterstitialDelegate {
 //
 //  func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-//    print("ad loaded")
+//    print("RYSU interstitial ad loaded")
 //  }
 //
 //  func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-//    print("ad failed to load: " + error.localizedDescription)
+//    print("RYSU interstitial ad failed to load: " + error.localizedDescription)
 //  }
 //
 //  func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-//    print("interstitial dismissed")
+//    print("RYSU interstitial dismissed")
 //    loadAd()
 //
 //    if let handler = completionHandler { handler() }
