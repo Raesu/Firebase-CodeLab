@@ -14,7 +14,7 @@ class BaseAdManager: NSObject {
   
   func request() -> GADRequest {
     let request = GADRequest()
-    request.testDevices = ["c484d6a91015fae88f41b78e6d1a6ccb", kGADSimulatorID]
+    request.testDevices = ["73f7aa69f9d9b86aad8d39280dfb80d8", kGADSimulatorID]
     return request
   }
   
