@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseRemoteConfig
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
